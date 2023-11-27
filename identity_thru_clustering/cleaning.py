@@ -1,6 +1,6 @@
 """
 
-Script for cleaning & creating the h5 files
+Script for cleaning & clustering data based on generated statistics in Assembly
 
 """
 from time import time
@@ -36,7 +36,7 @@ def main(original_hdf):
     stats = pd.concat([ind1_stats, ind2_stats], axis=0)
     assemblies = pd.concat([ind1, ind2], axis=0)
     labels = [0] * ind1.index.size + [1] * ind2.index.size
-    visualize(assemblies, action='cluster', data=stats, labels=labels, cluster_type=optics)
+    # visualize(assemblies, action='cluster', data=stats, labels=labels, cluster_type=optics)
     for i in range(0, 18, 2):
         histogram(ind1_stats.iloc[:, i], ind2_stats.iloc[:, i], stats.columns[i])
 
@@ -188,19 +188,18 @@ def histogram(column, proportion):
 def histogram(column_one, column_two, proportion):
     column_one = reject_outliers(column_one, 3)
     column_two = reject_outliers(column_two, 3)
-    fig, axs = plt.subplots(1, 2)
 
-    column_one.hist(bins=100, ax=axs[0])
-    column_two.hist(bins=100, ax=axs[1])
-    title = proportion + '\nSeparated By Individual\n' + FILE[0:25]
+    counts, bins, patches = plt.hist(column_one, bins=100, color='purple', alpha=0.5, label="Individual 1")
+    plt.hist(column_two, bins=100, color='yellow', alpha=0.5, label="Individual 2")
+    title = proportion + '\nBy Individual\n' + FILE[0:25]
     plt.title(title)
     plt.xlabel('Proportion')
     plt.ylabel('Frequency')
-    plt.tight_layout()
-    '''x_loc = bins[0] + 0.75 * (bins[-1] - bins[0])
+    plt.legend()
+    x_loc = bins[0] + 0.75 * (bins[-1] - bins[0])
     y_loc = 400
-    variance = "σ² = {:.4f}".format(np.var(column))
-    plt.text(x_loc, y_loc, variance)'''
+    # variance = "σ² = {:.4f}" + str(np.var(column_one))
+    # plt.text(x_loc, y_loc, variance)
     plt.savefig(DIRECTORY + 'plots/' + title + '.png')
     plt.show()
 
