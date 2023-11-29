@@ -12,10 +12,6 @@ class Assembly:
 
     PARTS = ['nose', 'leftEye', 'rightEye', 'stripe1', 'stripe2', 'stripe3', 'stripe4', 'tailBase', 'tailTip']
 
-    # initializer
-    # hdf_path (str) : original h5 file that the assembly is from
-    # assembly (DataFrame) : original row of key points
-    # frame (?): frame it was from
     def __init__(self, hdf_path, assembly):
         self.original_hdf = hdf_path
         self.assembly = assembly
