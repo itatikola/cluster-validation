@@ -13,10 +13,15 @@ class Assembly:
     PARTS = ['nose', 'leftEye', 'rightEye', 'stripe1', 'stripe2', 'stripe3', 'stripe4', 'tailBase', 'tailTip']
 
     def __init__(self, hdf_path, assembly):
+        '''
+
+        :param hdf_path:
+        :param assembly:
+        '''
         self.original_hdf = hdf_path
         self.assembly = assembly
         self.frame = assembly.name
-        self.individual = assembly.index[0][1]
+        self.individual = assembly.column[0][1]
         self.distance_matrix = None
         self.proportions = None
 
@@ -86,5 +91,3 @@ class Assembly:
                 self.distance_matrix[part_one][part_two] = self.distance_matrix[part_one][self.PARTS[j - 1]] \
                                                            + self.distance_matrix[self.PARTS[j - 1]][part_two]
                 self.distance_matrix[part_two][part_one] = self.distance_matrix[part_one][part_two]
-
-
