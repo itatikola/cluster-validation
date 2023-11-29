@@ -24,24 +24,32 @@ class MiniTrajectory:
 
     def displacement(self):
         '''
-
         :return: the displacement of the fish
         '''
         if self.assemblies is None:
             raise ValueError("Trajectory does not have a set of Assemblies.")
+        first = self.assemblies.iloc[0]
+        last = self.assemblies.iloc[-1]
+        vec1 = np.array([first.__getitem__(first.index[0]),
+                         first.__getitem__(first.index[1])])
+        vec2 = np.array([last.__getitem__(last.index[0]),
+                         last.assembly.__getitem__(last.index[1])])
+
+        return np.linalg.norm(vec2 - vec1)
 
     def speed(self):
         '''
-
         :return: the instantaneous speed of the fish
         '''
         return self.displacement() / self.assemblies.index.length
 
     def direction(self):
         '''
-
         :return: a vector object representing the direction that the fish is moving in
+                This is also the direction from stripe1 to nose
         '''
+
+
 
 
 
